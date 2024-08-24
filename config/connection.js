@@ -1,8 +1,7 @@
 
-const { default: mongoose } = require('mongoose');
-const mongoos=require('mongoose')
+const mongoose=require('mongoose')
 
-mongoos.connect("mongodb://localhost:27017/zoppi-add-product")
+mongoose.connect("mongodb://localhost:27017/zoppi-add-product")
 .then(()=>{
     console.log("mongoDB connected");
     
@@ -20,7 +19,7 @@ const LoginSchema=mongoose.Schema({
             require:true
         },
         category:{
-            type:Number,
+            type:String,
             require:true
         },
        price :{
@@ -31,7 +30,10 @@ const LoginSchema=mongoose.Schema({
             type:String,
             require:true
         },
-      
+      images:{
+       DATA:Buffer,
+       contentType:String
+      }
        
     
 })

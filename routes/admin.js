@@ -1,7 +1,8 @@
 var express = require('express');
 const { log } = require('handlebars');
 var router = express.Router();
-var productDetails=require('../config/connection')
+var productDetails=require('../config/connection');
+const { Error } = require('mongoose');
 
 
 /* GET users listing. */
@@ -11,7 +12,7 @@ router.get('/', function(req, res, next) {
       name:"IPHONE 11",
       category:"Mobile",
       about:"it is a good phone",
-      image:"https://i.pinimg.com/236x/aa/d8/75/aad875ffc1d33bfcbf8647c747471153.jpg"
+      image:"https://www.bing.com/images/search?view=detailV2&ccid=Ekk1jXJU&id=F72A2ED1DCFCD3F4300946C78E340E3A252B2C30&thid=OIP.Ekk1jXJUJ1H4ywlnGJaz5AHaIw&mediaurl=https%3a%2f%2fraylo.imgix.net%2fiphone-11-purple.png&exph=1112&expw=940&q=iphone+11&simid=608029780719786566&FORM=IRPRST&ck=DF7DEAA65B406FFB08764AA65A16DAD0&selectedIndex=38&itb=1"
 
     },
     {
@@ -48,7 +49,18 @@ router.get('/add-product',function(req,res){
 router.post('/add-product',(req,res)=>{
    console.log(req.body)
    console.log(req.files.images);
-productDetails(req.body,(result)=>{
+productDetails(req.body,(id)=>{
+  let image=req.files.images
+  console.log(id);
+  
+  image.mv('./public/images/'+id+'.jpg',(err,done)=>{
+    if(!err){
+      res.render('admin/add-product')
+    }else{
+      console.log(Error);
+      
+    }
+  })
   res.render('admin/add-product')
 })
 
